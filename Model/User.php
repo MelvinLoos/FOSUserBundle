@@ -342,43 +342,6 @@ abstract class User implements UserInterface, GroupableInterface
     }
 
     /**
-     * Returns the user roles
-     *
-     * Implements SecurityUserInterface
-     *
-     * @return array The roles
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-
-        foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
-        }
-
-        // we need to make sure to have at least one role
-        $roles[] = static::ROLE_DEFAULT;
-
-        return array_unique($roles);
-    }
-
-    /**
-     * Never use this to check if this user has access to anything!
-     *
-     * Use the SecurityContext, or an implementation of AccessDecisionManager
-     * instead, e.g.
-     *
-     *         $securityContext->isGranted('ROLE_USER');
-     *
-     * @param string $role
-     * @return Boolean
-     */
-    public function hasRole($role)
-    {
-        return in_array(strtoupper($role), $this->getRoles(), true);
-    }
-
-    /**
      * Checks whether the user's account has expired.
      *
      * Implements AdvancedUserInterface
@@ -747,7 +710,44 @@ abstract class User implements UserInterface, GroupableInterface
 
         return $this;
     }
-
+    
+    /**
+     * Returns the user roles
+     *
+     * Implements SecurityUserInterface
+     *
+     * @return array The roles
+     */
+    public function getRoles()
+    {
+    	$roles = $this->roles;
+    
+    	foreach ($this->getGroups() as $group) {
+    		$roles = array_merge($roles, $group->getRoles());
+    	}
+    
+    	// we need to make sure to have at least one role
+    	$roles[] = static::ROLE_DEFAULT;
+    
+    	return array_unique($roles);
+    }
+    
+    /**
+     * Never use this to check if this user has access to anything!
+     *
+     * Use the SecurityContext, or an implementation of AccessDecisionManager
+     * instead, e.g.
+     *
+     *         $securityContext->isGranted('ROLE_USER');
+     *
+     * @param string $role
+     * @return Boolean
+     */
+    public function hasRole($role)
+    {
+    	return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+    
     /**
      * Gets the groups granted to the user.
      *

@@ -27,7 +27,7 @@ profile:
     edit:
         submit: Upraviť
     flash:
-        updated: Profil bol úspešne zmenený.
+        updated: Profil bol uspešne zmenený.
 
 # Password change
 change_password:
