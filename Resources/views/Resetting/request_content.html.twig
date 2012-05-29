@@ -1,12 +1,34 @@
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <div>
-        {% if invalid_username is defined %}
-            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
-        {% endif %}
-        <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
-        <input type="text" id="username" name="username" />
-    </div>
-    <div>
-        <input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
-    </div>
-</form>
+<div class="form-container">
+	
+	<div class="login-intro-box">
+		
+			<p class="intro-title">Wachtwoord vergeten?</p>
+			<p>
+				Vul in het veld hiernaast je persoonlijke gebruikersnaam of email adres in.
+				Vervolgens zal je een mail ontvangen waarin de volgende stap staat beschreven
+				om je wachtwoord en/of gebruikersnaam te resetten.
+			</p>
+		
+	</div>
+			
+
+	<form style="margin-right:75px;" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request login">
+		<ul>
+			<li>
+				{% if invalid_username is defined %}
+					<p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+				{% endif %}
+			</li>
+			<li>
+				<label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+			</li>
+			<li>
+				<input type="text" id="username" name="username" />
+			</li>
+			<li>
+				<input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+			</li>
+		</ul>
+	</form>
+
+</div>

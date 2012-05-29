@@ -1,8 +1,51 @@
 {% form_theme form theme %}
+{% form_theme form _self %}
 
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
-    </div>
-</form>
+	{% block text_widget %}
+		<div class="default">
+			{% set type = type|default('text') %}
+			{{ block('field_widget') }}
+		</div>
+	{% endblock %}
+	
+	{% block text_label %}
+		<div class="default">
+			{% set type = type|default('text') %}
+			{{ block('field_label') }}
+		</div>
+	{% endblock %}
+	
+	<div class="form-container">
+	
+		<div class="login-intro-box">
+		<p class="intro-title">
+			Registreren kost maar een aantal minuten.
+		</p>
+		<p>
+			Als je een account cree&euml;rt kan je gebruik maken van alle mogelijkheden binnen het
+			advertentiesysteem van cMember. Registreren kost maar een aantal minuten. Zodra je
+			de aangemaakte account verifi&euml;ert kan je meteen aan de slag.
+		</p>
+		</div>
+		
+		
+		<form style="margin-right:75px;" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register login">
+			
+			
+				{{ form_errors(form) }}
+				
+				{{ form_label(form.username, 'Gebruikersnaam:') }}
+				{{ form_errors(form.username) }}
+				{{ form_widget(form.username) }}
+				
+				{{ form_label(form.email, 'Email Adres:') }}
+				{{ form_errors(form.email) }}
+				{{ form_widget(form.email) }}
+	
+				{{ form_rest(form) }}
+				
+
+				<input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+
+		</form>
+	</div>
