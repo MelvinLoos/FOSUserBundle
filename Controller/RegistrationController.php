@@ -36,7 +36,15 @@ class RegistrationController extends ContainerAware
         $process = $formHandler->process($confirmationEnabled);
         if ($process) {
             $user = $form->getData();
-
+			
+            // create an advertiser account in OpenX
+            $ox = $this->container->get('openx_transfer');
+            $advertiserName = $user->getUsername();
+            $emailAddress = $user->getEmail();
+            $user->setOxId($ox->addAdvertiser($advertiserName, $emailAddress));
+            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+            
             if ($confirmationEnabled) {
                 $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
                 $route = 'fos_user_registration_check_email';
@@ -44,7 +52,8 @@ class RegistrationController extends ContainerAware
                 $this->authenticateUser($user);
                 $route = 'fos_user_registration_confirmed';
             }
-
+			
+            
             $this->setFlash('fos_user_success', 'registration.flash.user_created');
             $url = $this->container->get('router')->generate($route);
 
