@@ -31,7 +31,12 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username')
             ->add('email', 'email')
-            ->add('plainPassword', 'repeated', array('type' => 'password'));
+            ->add('plainPassword', 'repeated', array(
+						'type' => 'password',
+						'invalid_message' => 'De wachtwoord velden moeten identiek zijn aan elkaar.',
+						'first_name' => 'Wachtwoord:',
+						'second_name' => 'Bevestigen:'
+			));
     }
 
     public function getDefaultOptions(array $options)
