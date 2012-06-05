@@ -36,14 +36,6 @@ class RegistrationController extends ContainerAware
         $process = $formHandler->process($confirmationEnabled);
         if ($process) {
             $user = $form->getData();
-			
-            // create an advertiser account in OpenX
-            $ox = $this->container->get('openx_transfer');
-            $advertiserName = $user->getUsername();
-            $emailAddress = $user->getEmail();
-            $user->setOxId($ox->addAdvertiser($advertiserName, $emailAddress));
-            $userManager = $this->container->get('fos_user.user_manager');
-            $userManager->updateUser($user);
             
             if ($confirmationEnabled) {
                 $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
