@@ -1,0 +1,19 @@
+<div class="form-container">
+	
+		<div class="login-intro-box">
+		<p class="intro-title">
+			Gefeliciteerd!
+		</p>
+		<p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}
+			{% if app.session is not empty %}
+				{% set targetUrl = app.session.get('_security.target_path') %}
+				{% if targetUrl is not empty %}<a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a>
+		   
+		   {% else %}
+				<p><a style="color:#7F50A0" href="{{ path('home') }}">Inloggen</a></p>
+				{% endif %}
+			{% endif %}
+		 </p>
+		</div>
+	
+	</div>
